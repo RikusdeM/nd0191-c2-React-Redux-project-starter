@@ -16,7 +16,7 @@ const Question = ({ authedUser, question }) => {
   };
 
   if (question === null) {
-    return <p>This Tweet doesn't existd</p>;
+    return <p>This Question doesn't exist</p>;
   }
 
   return (

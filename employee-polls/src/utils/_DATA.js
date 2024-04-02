@@ -3,7 +3,7 @@ let users = {
     id: 'sarahedo',
     password:'password123',
     name: 'Sarah Edo',
-    avatarURL: "https://drive.google.com/file/d/1ZxZRi8OnaOEgzxwpM8jVfVeh7MQZL2At/view?usp=sharing",
+    avatarURL: "avatar_marilyn_monroe.png",
     answers: {
       "8xf0y6ziyjabvozdd253nd": 'optionOne',
       "6ni6ok3ym7mf1p33lnez": 'optionOne',
@@ -16,7 +16,7 @@ let users = {
     id: 'tylermcginnis',
     password:'abc321',
     name: 'Tyler McGinnis',
-    avatarURL: "https://drive.google.com/file/d/1qM_C0VZB1OXLDU9DV0Phs0K-v62KRWu2/view?usp=sharing",
+    avatarURL: "avatar_bad_breaking_chemisrty_heisenberg.png",
     answers: {
       "vthrdm985a262al8qx3do": 'optionOne',
       "xj352vofupe1dqz9emx13r": 'optionTwo',
@@ -27,7 +27,7 @@ let users = {
     id: 'mtsamis',
     password:'xyz123',
     name: 'Mike Tsamis',
-    avatarURL: "https://drive.google.com/file/d/1MWGQEM9H5b9DbJQ85tHeMILVOkim_Y49/view?usp=sharing",
+    avatarURL: "avatar_batman.png",
     answers: {
       "xj352vofupe1dqz9emx13r": 'optionOne',
       "vthrdm985a262al8qx3do": 'optionTwo',
@@ -39,7 +39,7 @@ let users = {
     id: 'zoshikanlu',
     password:'pass246',
     name: 'Zenobia Oshikanlu',
-    avatarURL: "https://drive.google.com/file/d/1Orm9RvvBP5C6uh7t6Snk342SxkKHVv8u/view?usp=sharing",
+    avatarURL: "avatar_coffee_cup_zorro.png",
     answers: {
       "xj352vofupe1dqz9emx13r": 'optionOne',
     },
