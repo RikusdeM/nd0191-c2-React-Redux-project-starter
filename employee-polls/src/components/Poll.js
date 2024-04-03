@@ -1,4 +1,5 @@
 import "bootstrap/dist/css/bootstrap.css";
+import Badge from "react-bootstrap/Badge";
 import { connect } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
@@ -13,14 +14,31 @@ const withRouter = (Component) => {
   return ComponentWithRouterProp;
 };
 
-const Poll = ({ authedUser, user, question }) => {
+const Poll = ({ authedUser, users, question, alreadyAnswered }) => {
   const { id, author, optionOne, optionTwo } = question;
-  const { avatarURL } = user;
+  const { avatarURL } = users[question.author];
 
   const updatePoll = (e) => {
     e.preventDefault();
     console.log("pressed button");
   };
+
+  const pollSummary = {
+    totalUsers: Object.keys(users).length,
+    optOneVotes: question.optionOne.votes.length,
+    optTwoVotes: question.optionTwo.votes.length,
+  };
+
+  const myAnswerFun = () => {
+    const authedUserInfo = users[authedUser];
+    if (alreadyAnswered && authedUserInfo) {
+      return authedUserInfo.answers[id];
+    } else {
+      return null;
+    }
+  };
+
+  const myAnswer = myAnswerFun();
 
   return (
     <div>
@@ -37,13 +55,31 @@ const Poll = ({ authedUser, user, question }) => {
             <div className="card">
               <div className="card-body">
                 <h5 className="card-title">{optionOne.text}</h5>
-                <button
-                  type="button"
-                  className="btn btn-sm btn-block btn-outline-success"
-                  onClick={(e) => updatePoll(e)}
-                >
-                  Click
-                </button>
+                {alreadyAnswered ? (
+                  <div>
+                    <h6>
+                      {pollSummary.optOneVotes} Votes{" "}
+                      <Badge bg="secondary">
+                        {(pollSummary.optOneVotes / pollSummary.totalUsers) *
+                          100}
+                        %
+                      </Badge>
+                    </h6>
+                    <h6>
+                      <Badge bg="info">
+                        {myAnswer === "optionOne" ? <p>My Answer</p> : ""}
+                      </Badge>
+                    </h6>
+                  </div>
+                ) : (
+                  <button
+                    type="button"
+                    className="btn btn-sm btn-block btn-outline-success"
+                    onClick={(e) => updatePoll(e)}
+                  >
+                    Click
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -51,13 +87,31 @@ const Poll = ({ authedUser, user, question }) => {
             <div className="card">
               <div className="card-body">
                 <h5 className="card-title">{optionTwo.text}</h5>
-                <button
-                  type="button"
-                  className="btn btn-sm btn-block btn-outline-success"
-                  onClick={(e) => updatePoll(e)}
-                >
-                  Click
-                </button>
+                {alreadyAnswered ? (
+                  <div>
+                    <h6>
+                      {pollSummary.optTwoVotes} Votes{" "}
+                      <Badge bg="secondary">
+                        {(pollSummary.optTwoVotes / pollSummary.totalUsers) *
+                          100}
+                        %
+                      </Badge>
+                    </h6>
+                    <h6>
+                      <Badge bg="info">
+                        {myAnswer === "optionTwo" ? <p>My Answer</p> : ""}
+                      </Badge>
+                    </h6>
+                  </div>
+                ) : (
+                  <button
+                    type="button"
+                    className="btn btn-sm btn-block btn-outline-success"
+                    onClick={(e) => updatePoll(e)}
+                  >
+                    Click
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -72,10 +126,16 @@ const mapStateToProps = ({ authedUser, users, questions }, props) => {
   const question = questions[question_id];
   const user = users[question.author];
 
+  const alreadyAnswered = Object.keys(users[authedUser].answers).includes(
+    question_id
+  );
+  console.log("alreadyAnswered : " + alreadyAnswered);
+
   return {
     authedUser,
-    user,
+    users,
     question: question ? question : null,
+    alreadyAnswered,
   };
 };
 

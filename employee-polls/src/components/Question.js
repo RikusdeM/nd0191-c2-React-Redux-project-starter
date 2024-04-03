@@ -5,13 +5,13 @@ import { useNavigate } from "react-router-dom";
 const Question = ({ authedUser, question }) => {
   const navigate = useNavigate();
   const { id, author, timestamp } = question;
-  console.log("from the question");
-  console.log(question);
-  console.log(author);
+  // console.log("from the question");
+  // console.log(question);
+  // console.log(author);
 
   const toPoll = (e, id) => {
     e.preventDefault();
-    console.log("Show the completed or currently running poll : " + id);
+    // console.log("Show the completed or currently running poll : " + id);
     navigate(`/questions/${id}`);
   };
 
