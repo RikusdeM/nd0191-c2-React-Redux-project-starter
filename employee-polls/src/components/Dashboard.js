@@ -16,13 +16,13 @@ const Dashboard = ({
           <div className="col">
             <QuestionList
               name={"New Questions"}
-              questionsIds={answeredQuestionsIds}
+              questionsIds={unansweredQuestionsIds}
             />
           </div>
         </div>
         <div className="row">
           <div className="col">
-            <QuestionList name={"Done"} questionsIds={unansweredQuestionsIds} />
+            <QuestionList name={"Done"} questionsIds={answeredQuestionsIds} />
           </div>
         </div>
       </div>

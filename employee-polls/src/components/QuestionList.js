@@ -1,27 +1,21 @@
 import Question from "./Question";
 import "bootstrap/dist/css/bootstrap.css";
+import DynamicGrid from "../utils/DynamicGrid";
 
 const QuestionList = ({ name, questionsIds }) => {
   return (
     <div>
       <h2>{name}</h2>
-
       <div className="container">
-        <div className="row">
-          {questionsIds.map((id, index) =>
-            index % 4 === 0 && index !== 0 ? (
-              <div key={id} className="row">
-                <div className="col">
-                  <Question id={id}></Question>
+        <DynamicGrid colCount={3} md={3}>
+          {questionsIds.length > 0
+            ? questionsIds.map((id, index) => (
+                <div key={index}>
+                  <Question id={id}></Question>                  
                 </div>
-              </div>
-            ) : (
-              <div key={id} className="col">
-                <Question id={id}></Question>
-              </div>
-            )
-          )}
-        </div>
+              ))
+            : [<p>No Questions are found.</p>]}
+        </DynamicGrid>   
       </div>
     </div>
   );

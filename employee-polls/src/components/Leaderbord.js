@@ -17,8 +17,7 @@ const Leaderboard = ({ rankedUsers }) => {
       </thead>
       <tbody>
         {sortedRankedUsersIds.map((usr) => {
-          const user = rankedUsers[usr];
-          console.log(user);
+          const user = rankedUsers[usr];                    
           return (
             <tr key={user.id}>
               <th scope="row">{user.ranking + 1}</th>
@@ -27,7 +26,7 @@ const Leaderboard = ({ rankedUsers }) => {
                   <div className="row nav justify-content-center">
                     <div className="col-sm-2">
                       <img
-                        src={user.avatarURL}
+                        src={`../${user.avatarURL}`}
                         style={{ width: 64, height: 64 }}
                       />
                     </div>

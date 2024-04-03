@@ -14,7 +14,7 @@ const Poll = ({ authedUser, user, question }) => {
   return (
     <div>
       <h2>Poll by {author}</h2>
-      <img src={avatarURL} alt={`Avatar of ${author}`} className="avatar" />
+      <img src={`../${avatarURL}`} alt={`Avatar of ${author}`} className="avatar" />
       <h3>Would you Rather</h3>
       <div className="container">
         <div className="row">
