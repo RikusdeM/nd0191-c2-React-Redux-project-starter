@@ -15,7 +15,7 @@ const App = (props) => {
   const questionID = "loxhs1bqm25b708cmbf3g"
 
   return (
-    <div className="App">{props.loading === true ? null : <Leaderboard />}</div>
+    <div className="App">{props.loading === true ? null : <CreatePoll />}</div>
   );
 };
 

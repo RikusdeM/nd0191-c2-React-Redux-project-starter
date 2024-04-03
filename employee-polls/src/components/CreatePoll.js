@@ -1,22 +1,35 @@
 import "bootstrap/dist/css/bootstrap.css";
+import { connect } from "react-redux";
 import { useState } from "react";
+import { handleAddQuestion } from "../actions/questions";
 
-const CreatePoll = () => {
+const CreatePoll = ({ authedUser, dispatch }) => {
   const [textOne, setTextOne] = useState("");
   const [textTwo, setTextTwo] = useState("");
 
   const handleChangeOne = (e) => {
-    const text = e.target.value
-    setTextOne(text)
-  }
+    const text = e.target.value;
+    setTextOne(text);
+  };
   const handleChangeTwo = (e) => {
-    const text = e.target.value
-    setTextTwo(text)
-  }
+    const text = e.target.value;
+    setTextTwo(text);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("submit new Poll")
+
+    
+    const newQuestion = {
+      author: authedUser,
+      optionOneText: textOne,
+      optionTwoText: textTwo,
+    };
+
+    dispatch(handleAddQuestion(newQuestion));
+
+    setTextOne("");
+    setTextTwo("");
   };
 
   return (
@@ -28,7 +41,11 @@ const CreatePoll = () => {
           <div className="col">
             <div className="p-3">
               <h6>First Option</h6>
-              <input placeholder="Option One" onChange={handleChangeOne}/>
+              <input
+                placeholder="Option One"
+                value={textOne}
+                onChange={handleChangeOne}
+              />
             </div>
           </div>
         </div>
@@ -37,7 +54,11 @@ const CreatePoll = () => {
           <div className="col">
             <div className="p-3">
               <h6>Second Option</h6>
-              <input placeholder="Option Two" onChange={handleChangeTwo} />
+              <input
+                placeholder="Option Two"
+                value={textTwo}
+                onChange={handleChangeTwo}
+              />
             </div>
           </div>
         </div>
@@ -61,4 +82,10 @@ const CreatePoll = () => {
   );
 };
 
-export default CreatePoll;
+const mapStateToProps = ({ authedUser }) => {
+  return {
+    authedUser,
+  };
+};
+
+export default connect(mapStateToProps)(CreatePoll);
