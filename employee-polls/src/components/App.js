@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import { handleInitialData } from "../actions/shared";
 import Dashboard from "./Dashboard";
 import Poll from "./Poll";
+import CreatePoll from "./CreatePoll";
+import Leaderboard from "./Leaderbord";
 
 const App = (props) => {
   useEffect(() => {
@@ -13,7 +15,7 @@ const App = (props) => {
   const questionID = "loxhs1bqm25b708cmbf3g"
 
   return (
-    <div className="App">{props.loading === true ? null : <Poll id={questionID} />}</div>
+    <div className="App">{props.loading === true ? null : <Leaderboard />}</div>
   );
 };
 
