@@ -2,8 +2,10 @@ import "bootstrap/dist/css/bootstrap.css";
 import { connect } from "react-redux";
 import { useState } from "react";
 import { handleAddQuestion } from "../actions/questions";
+import { useNavigate } from "react-router-dom";
 
 const CreatePoll = ({ authedUser, dispatch }) => {
+  const navigate = useNavigate();
   const [textOne, setTextOne] = useState("");
   const [textTwo, setTextTwo] = useState("");
 
@@ -19,7 +21,6 @@ const CreatePoll = ({ authedUser, dispatch }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    
     const newQuestion = {
       author: authedUser,
       optionOneText: textOne,
@@ -30,6 +31,8 @@ const CreatePoll = ({ authedUser, dispatch }) => {
 
     setTextOne("");
     setTextTwo("");
+
+    navigate("/");
   };
 
   return (

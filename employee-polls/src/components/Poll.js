@@ -1,5 +1,17 @@
-import { connect } from "react-redux";
 import "bootstrap/dist/css/bootstrap.css";
+import { connect } from "react-redux";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+
+const withRouter = (Component) => {
+  const ComponentWithRouterProp = (props) => {
+    let location = useLocation();
+    let navigate = useNavigate();
+    let params = useParams();
+    return <Component {...props} router={{ location, navigate, params }} />;
+  };
+
+  return ComponentWithRouterProp;
+};
 
 const Poll = ({ authedUser, user, question }) => {
   const { id, author, optionOne, optionTwo } = question;
@@ -10,11 +22,14 @@ const Poll = ({ authedUser, user, question }) => {
     console.log("pressed button");
   };
 
-
   return (
     <div>
       <h2>Poll by {author}</h2>
-      <img src={`../${avatarURL}`} alt={`Avatar of ${author}`} className="avatar" />
+      <img
+        src={`../${avatarURL}`}
+        alt={`Avatar of ${author}`}
+        className="avatar"
+      />
       <h3>Would you Rather</h3>
       <div className="container">
         <div className="row">
@@ -52,8 +67,9 @@ const Poll = ({ authedUser, user, question }) => {
   );
 };
 
-const mapStateToProps = ({ authedUser, users, questions }, { id }) => {
-  const question = questions[id];
+const mapStateToProps = ({ authedUser, users, questions }, props) => {
+  const { question_id } = props.router.params;
+  const question = questions[question_id];
   const user = users[question.author];
 
   return {
@@ -63,4 +79,4 @@ const mapStateToProps = ({ authedUser, users, questions }, { id }) => {
   };
 };
 
-export default connect(mapStateToProps)(Poll);
+export default withRouter(connect(mapStateToProps)(Poll));

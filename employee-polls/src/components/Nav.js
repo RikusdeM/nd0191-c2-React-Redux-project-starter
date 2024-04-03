@@ -15,10 +15,7 @@ const Nav = () => {
           </Link>
           <Link to="/add" className="nav-item nav-link">
             New
-          </Link>
-          <Link to="/questions/1" className="nav-item nav-link">
-            Poll
-          </Link>
+          </Link>          
         </div>
       </div>
     </nav>

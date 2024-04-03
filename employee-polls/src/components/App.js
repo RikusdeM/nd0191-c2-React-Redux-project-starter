@@ -14,8 +14,6 @@ const App = (props) => {
     props.dispatch(handleInitialData());
   }, []);
 
-  const questionID = "loxhs1bqm25b708cmbf3g";
-
   return (
     <Fragment>
       <div className="container">
@@ -25,7 +23,7 @@ const App = (props) => {
             <Route path="/" exact element={<Dashboard/>} />
             {/* <Poll id={questionID} /> */}
             {/* <Route path="/questions/:question_id" element={<Page />} /> */}
-            <Route path="/questions/:question_id" element={<Poll id={questionID} />} />
+            <Route path="/questions/:question_id" element={<Poll />} />
             <Route path="/leaderboard" exact element={<Leaderboard />} />
             <Route path="/add" exact element={<CreatePoll />} />
 
