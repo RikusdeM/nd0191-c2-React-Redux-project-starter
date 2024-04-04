@@ -1,4 +1,8 @@
-import { saveQuestion, saveQuestionAnswer } from "../utils/api";
+import {
+  saveQuestion,
+  saveQuestionAnswer,
+  saveQuestionUserUpdate,
+} from "../utils/api";
 import {
   updateUserAddAnswer,
   updateUserRemoveAnswer,
@@ -31,26 +35,32 @@ export function handleAddQuestion(questionsText) {
     // dispatch(showLoading());
     //Todo: Re-add loading
 
-    return (
-      saveQuestion({
-        optionOneText: questionsText.optionOneText,
-        optionTwoText: questionsText.optionTwoText,
-        author: authedUser,
-      })
-        .then((question) => {
-          dispatch(addQuestion({ [question.id]: question }));
-          dispatch(
-            updateUserQuestions({
-              authedUser: authedUser,
-              id: question.id,
-            })
-          );
-        })
-        // todo: should also update the user questions
-        .catch((error) => console.error(error))
-    );
+    const updateBackend = async () => {
+      try {
+        const question = await saveQuestion({
+          optionOneText: questionsText.optionOneText,
+          optionTwoText: questionsText.optionTwoText,
+          author: authedUser,
+        });
+        const updateUserQ = await saveQuestionUserUpdate({
+          authedUser: authedUser,
+          qid: question.id,
+        });
 
-    //   .then(() => dispatch(hideLoading()));
+        dispatch(addQuestion({ [question.id]: question }));
+        dispatch(
+          updateUserQuestions({
+            authedUser: authedUser,
+            id: question.id,
+          })
+        );
+      } catch (error) {
+        console.error("An error occurred: ", error);
+        alert("Could not add Question, please try again")
+      }
+    };
+
+    return updateBackend();
   };
 }
 

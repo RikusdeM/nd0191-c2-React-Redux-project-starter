@@ -194,7 +194,7 @@ export function _saveQuestionUserUpdate({authedUser, qid}){
       }
 
       resolve(true)
-    }, 500)
+    }, 50)
 
   })
 }
