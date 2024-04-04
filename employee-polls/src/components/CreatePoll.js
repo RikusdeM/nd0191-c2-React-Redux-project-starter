@@ -36,7 +36,7 @@ const CreatePoll = ({ authedUser, dispatch }) => {
   };
 
   return (
-    <div>
+    <div className="content-center">
       <h3>Would You Rather</h3>
       <h5 className="text-muted">Create Your Own Poll</h5>
       <div className="container overflow-hidden">

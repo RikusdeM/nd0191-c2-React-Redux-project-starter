@@ -41,7 +41,7 @@ const Poll = ({ authedUser, users, question, alreadyAnswered }) => {
   const myAnswer = myAnswerFun();
 
   return (
-    <div>
+    <div className="content-center">
       <h2>Poll by {author}</h2>
       <img
         src={`../${avatarURL}`}

@@ -10,8 +10,8 @@ const Dashboard = ({
 }) => {
   return (
     <div>
-      <h3 className="center">Dashboard of {authedUser}</h3>
-      <div className="container">
+      <h3 className="content-center">Dashboard of {authedUser}</h3>
+      <div className="container content-center">
         <div className="row">
           <div className="col">
             <QuestionList
