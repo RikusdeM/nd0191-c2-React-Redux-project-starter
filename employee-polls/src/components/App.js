@@ -7,6 +7,7 @@ import Poll from "./Poll";
 import CreatePoll from "./CreatePoll";
 import Leaderboard from "./Leaderbord";
 import Nav from "./Nav";
+import NoMatch from "./NoMatch";
 import {
   BrowserRouter as Router,
   Route,
@@ -70,7 +71,8 @@ const App = (props) => {
                 <Navigate replace to={"/login"} />
               )
             }
-          />                              
+          />
+          <Route path="*" element={<NoMatch />} />
         </Routes>
       </div>
     </Fragment>

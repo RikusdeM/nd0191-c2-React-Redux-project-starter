@@ -63,7 +63,7 @@ const Login = ({ users, dispatch }) => {
       />
       <h6>Password</h6>
       <input
-        type="text"
+        type="password"
         placeholder="Password"
         value={password}
         onChange={onPasswordInputChange}
