@@ -1,8 +1,15 @@
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { setAuthedUser } from "../actions/authedUser";
 
-const Nav = ({ authedUser, users }) => {
+const Nav = ({ authedUser, users, dispatch }) => {
   //todo: add active state to navbar, i.e. which tab is currently active
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    dispatch(setAuthedUser(null));
+    // setLinkClicked(true)
+  }
   
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -29,6 +36,7 @@ const Nav = ({ authedUser, users }) => {
                 <img
                   src={`../${users[authedUser].avatarURL}`}
                   style={{ width: 34, height: 34 }}
+                  alt={`${users[authedUser].avatarURL}`}
                 />                
               </div>
             ) : null}
@@ -38,7 +46,7 @@ const Nav = ({ authedUser, users }) => {
           </li>
           <li>
             {authedUser && (
-              <Link to="/logout" className="nav-item nav-link">
+              <Link className="nav-item nav-link" onClick={handleLogout}>
                 Logout
               </Link>
             )}

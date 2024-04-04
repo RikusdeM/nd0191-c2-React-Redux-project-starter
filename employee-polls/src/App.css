@@ -58,6 +58,10 @@
   text-align: right;
 }
 
+.login-btn-padding {
+  margin-bottom: 20px;
+}
+
 .li-nav-padding {
   margin-right: 40px;
 }
