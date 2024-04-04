@@ -9,7 +9,7 @@ const Dashboard = ({
   authedUser,
 }) => {
   return (
-    <div>      
+    <div>
       <div className="container content-center">
         <div className="row">
           <div className="col">
@@ -35,16 +35,10 @@ const mapStateToProps = ({ questions, authedUser, users }) => {
   };
 
   const answeredQuestionsIds = Object.keys(users[authedUser].answers);
-  //   const answeredQuestions = answeredQuestionsIds.map((questionId, index) =>
-  //     lodash.get(questions, answeredQuestionsIds[index])
-  //   );
 
   const unansweredQuestionsIds = Object.keys(questions).filter(
     (qId) => !answeredQuestionsIds.includes(qId)
   );
-  //   const unansweredQuestions = unansweredQuestionsIds.map((questionId, index) =>
-  //     lodash.get(questions, unansweredQuestionsIds[index])
-  //   );
 
   return {
     answeredQuestionsIds: sortQuestions(answeredQuestionsIds),

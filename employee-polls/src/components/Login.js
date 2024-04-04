@@ -24,10 +24,10 @@ const Login = ({ users, dispatch }) => {
     e.preventDefault();
 
     const user = users[userName];
-    console.log(user);
+    
     if (user !== undefined) {
-      if (user.password === password) {
-        dispatch(setAuthedUser(user));
+      if (user.password === password) {                
+        dispatch(setAuthedUser(user.id));
 
         setUserName("");
         setPassword("");

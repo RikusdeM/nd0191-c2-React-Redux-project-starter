@@ -7,7 +7,13 @@ import Poll from "./Poll";
 import CreatePoll from "./CreatePoll";
 import Leaderboard from "./Leaderbord";
 import Nav from "./Nav";
-import { Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
+import Login from "./Login";
 
 const App = (props) => {
   useEffect(() => {
@@ -17,25 +23,62 @@ const App = (props) => {
   return (
     <Fragment>
       <div className="container">
-        <Nav/>
-        {props.loading === true ? null : (
-          <Routes>
-            <Route path="/" exact element={<Dashboard/>} />
-            {/* <Poll id={questionID} /> */}
-            {/* <Route path="/questions/:question_id" element={<Page />} /> */}
-            <Route path="/questions/:question_id" element={<Poll />} />
-            <Route path="/leaderboard" exact element={<Leaderboard />} />
-            <Route path="/add" exact element={<CreatePoll />} />
+        {props.loggedIn === false ? null : <Nav />}
 
-          </Routes>
-        )}
+        <Routes>
+          <Route path="/login" exact element={<Login />} />
+
+          <Route
+            exact
+            path="/"
+            element={
+              props.loggedIn ? (
+                <Dashboard />
+              ) : (
+                <Navigate replace to={"/login"} />
+              )
+            }
+          />
+
+          <Route
+            exact
+            path="/questions/:question_id"
+            element={
+              props.loggedIn ? <Poll /> : <Navigate replace to={"/login"} />
+            }
+          />
+
+          <Route
+            exact
+            path="/leaderboard"
+            element={
+              props.loggedIn ? (
+                <Leaderboard />
+              ) : (
+                <Navigate replace to={"/login"} />
+              )
+            }
+          />
+
+          <Route
+            exact
+            path="/add"
+            element={
+              props.loggedIn ? (
+                <CreatePoll />
+              ) : (
+                <Navigate replace to={"/login"} />
+              )
+            }
+          />                              
+        </Routes>
       </div>
     </Fragment>
   );
 };
 
 const mapStateToProps = ({ authedUser }) => ({
-  loading: authedUser === null,
+  loggedIn: authedUser !== null,
 });
 
 export default connect(mapStateToProps)(App);
