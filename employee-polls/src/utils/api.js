@@ -3,6 +3,7 @@ import {
   _getUsers,
   _saveQuestionAnswer,
   _saveQuestion,
+  _saveQuestionUserUpdate,
 } from "./_DATA";
 
 export function getInitialData() {
@@ -10,6 +11,10 @@ export function getInitialData() {
     users,
     questions,
   }));
+}
+
+export function saveQuestionUserUpdate(info){
+  return _saveQuestionUserUpdate(info);
 }
 
 export function saveQuestionAnswer(info) {

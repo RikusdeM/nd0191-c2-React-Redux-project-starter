@@ -178,6 +178,27 @@ export function _saveQuestion (question) {
   })
 }
 
+export function _saveQuestionUserUpdate({authedUser, qid}){
+  return new Promise((resolve, reject) => {
+    if (!authedUser | !qid) {
+      reject("Please provide authedUser and qid");
+    }
+
+    setTimeout(() => {
+      users = {
+        ...users,
+        [authedUser]: {
+          ...users[authedUser],
+          questions: [...users[authedUser].questions, qid],
+        }
+      }
+
+      resolve(true)
+    }, 500)
+
+  })
+}
+
 export function _saveQuestionAnswer ({ authedUser, qid, answer }) {
   return new Promise((resolve, reject) => {
     if (!authedUser || !qid || !answer) {

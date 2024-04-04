@@ -1,5 +1,9 @@
 import { saveQuestion, saveQuestionAnswer } from "../utils/api";
-import { updateUserAddAnswer, updateUserRemoveAnswer } from "./users";
+import {
+  updateUserAddAnswer,
+  updateUserRemoveAnswer,
+  updateUserQuestions,
+} from "./users";
 
 export const RECEIVE_QUESTIONS = "RECEIVE_QUESTIONS";
 export const ADD_QUESTION = "ADD_QUESTION";
@@ -27,13 +31,24 @@ export function handleAddQuestion(questionsText) {
     // dispatch(showLoading());
     //Todo: Re-add loading
 
-    return saveQuestion({
-      optionOneText: questionsText.optionOneText,
-      optionTwoText: questionsText.optionTwoText,
-      author: authedUser,
-    })
-      .then((question) => dispatch(addQuestion({ [question.id]: question })))
-      .catch((error) => console.error(error));
+    return (
+      saveQuestion({
+        optionOneText: questionsText.optionOneText,
+        optionTwoText: questionsText.optionTwoText,
+        author: authedUser,
+      })
+        .then((question) => {
+          dispatch(addQuestion({ [question.id]: question }));
+          dispatch(
+            updateUserQuestions({
+              authedUser: authedUser,
+              id: question.id,
+            })
+          );
+        })
+        // todo: should also update the user questions
+        .catch((error) => console.error(error))
+    );
 
     //   .then(() => dispatch(hideLoading()));
   };

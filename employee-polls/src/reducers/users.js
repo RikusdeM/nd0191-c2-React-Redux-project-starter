@@ -2,6 +2,7 @@ import {
   RECEIVE_USERS,
   UPDATE_USER_ADD_ANSWER,
   UPDATE_USER_REMOVE_ANSWER,
+  UPDATE_USER_QUESTIONS,
 } from "../actions/users";
 
 export default function users(state = {}, action) {
@@ -32,6 +33,15 @@ export default function users(state = {}, action) {
           ),
         },
       };
+    case UPDATE_USER_QUESTIONS:
+      return {
+        ...state,
+        [action.authedUser]: {
+          ...state[action.authedUser],
+          questions: [...state[action.authedUser].questions, action.id],
+        },
+      };
+
     default:
       return state;
   }
