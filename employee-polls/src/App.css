@@ -53,3 +53,15 @@
 .content-center {
   text-align: center;
 }
+
+.content-right {
+  text-align: right;
+}
+
+.li-nav-padding {
+  margin-right: 40px;
+}
+.li-nav-center {
+  display: flex;
+  align-items: center;
+}
