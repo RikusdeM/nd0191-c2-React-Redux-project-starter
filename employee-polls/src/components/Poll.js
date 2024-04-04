@@ -2,6 +2,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import Badge from "react-bootstrap/Badge";
 import { connect } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { handleAnswerQuestion } from "../actions/questions";
 
 const withRouter = (Component) => {
   const ComponentWithRouterProp = (props) => {
@@ -14,13 +15,18 @@ const withRouter = (Component) => {
   return ComponentWithRouterProp;
 };
 
-const Poll = ({ authedUser, users, question, alreadyAnswered }) => {
+const Poll = ({ authedUser, users, question, alreadyAnswered, dispatch }) => {
   const { id, author, optionOne, optionTwo } = question;
   const { avatarURL } = users[question.author];
 
-  const updatePoll = (e) => {
+  const ANSWERS = {
+    OPTION_ONE: "optionOne",
+    OPTION_TWO: "optionTwo",
+  };
+
+  const updatePoll = (e, answer) => {
     e.preventDefault();
-    console.log("pressed button");
+    dispatch(handleAnswerQuestion({ authedUser, id, answer }));
   };
 
   const pollSummary = {
@@ -67,7 +73,11 @@ const Poll = ({ authedUser, users, question, alreadyAnswered }) => {
                     </h6>
                     <h6>
                       <Badge bg="info">
-                        {myAnswer === "optionOne" ? <p>My Answer</p> : ""}
+                        {myAnswer === ANSWERS.OPTION_ONE ? (
+                          <p>My Answer</p>
+                        ) : (
+                          ""
+                        )}
                       </Badge>
                     </h6>
                   </div>
@@ -75,7 +85,7 @@ const Poll = ({ authedUser, users, question, alreadyAnswered }) => {
                   <button
                     type="button"
                     className="btn btn-sm btn-block btn-outline-success"
-                    onClick={(e) => updatePoll(e)}
+                    onClick={(e) => updatePoll(e, ANSWERS.OPTION_ONE)}
                   >
                     Click
                   </button>
@@ -99,7 +109,11 @@ const Poll = ({ authedUser, users, question, alreadyAnswered }) => {
                     </h6>
                     <h6>
                       <Badge bg="info">
-                        {myAnswer === "optionTwo" ? <p>My Answer</p> : ""}
+                        {myAnswer === ANSWERS.OPTION_TWO ? (
+                          <p>My Answer</p>
+                        ) : (
+                          ""
+                        )}
                       </Badge>
                     </h6>
                   </div>
@@ -107,7 +121,7 @@ const Poll = ({ authedUser, users, question, alreadyAnswered }) => {
                   <button
                     type="button"
                     className="btn btn-sm btn-block btn-outline-success"
-                    onClick={(e) => updatePoll(e)}
+                    onClick={(e) => updatePoll(e, ANSWERS.OPTION_TWO)}
                   >
                     Click
                   </button>
@@ -129,7 +143,6 @@ const mapStateToProps = ({ authedUser, users, questions }, props) => {
   const alreadyAnswered = Object.keys(users[authedUser].answers).includes(
     question_id
   );
-  console.log("alreadyAnswered : " + alreadyAnswered);
 
   return {
     authedUser,
