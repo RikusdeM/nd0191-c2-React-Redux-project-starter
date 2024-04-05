@@ -1,30 +1,72 @@
 import { connect } from "react-redux";
-import * as lodash from "lodash";
 import QuestionList from "./QuestionList";
 import "bootstrap/dist/css/bootstrap.css";
+import Dropdown from "react-bootstrap/Dropdown";
+import DropdownButton from "react-bootstrap/DropdownButton";
+import { useState } from "react";
 
 const Dashboard = ({
   answeredQuestionsIds,
   unansweredQuestionsIds,
   authedUser,
 }) => {
+  const QUESTIONS = {
+    UNANSWERED: 0,
+    ANSWERED: 1,
+    ALL: 2,
+  };
+
+  const [dropDown, setDropDown] = useState(QUESTIONS.UNANSWERED);  
+
   return (
     <div>
-      <div className="container content-center">
-        <div className="row">
-          <div className="col">
-            <QuestionList
-              name={"New Questions"}
-              questionsIds={unansweredQuestionsIds}
-            />
+      <DropdownButton id="dropdown-basic-button" title="Show Polls">
+        <Dropdown.Item          
+          disabled={dropDown === QUESTIONS.UNANSWERED}
+          onClick={(e) => setDropDown(QUESTIONS.UNANSWERED)}
+        >
+          New Questions
+        </Dropdown.Item>
+        <Dropdown.Item disabled={dropDown === QUESTIONS.ANSWERED} onClick={(e) => setDropDown(QUESTIONS.ANSWERED)}>
+          Done
+        </Dropdown.Item>
+        <Dropdown.Item disabled={dropDown === QUESTIONS.ALL} onClick={(e) => setDropDown(QUESTIONS.ALL)}>
+          All
+        </Dropdown.Item>
+      </DropdownButton>
+
+      {dropDown === QUESTIONS.UNANSWERED ? (
+        <div className="container content-center">
+          <QuestionList
+            name={"New Questions"}
+            questionsIds={unansweredQuestionsIds}
+          />
+        </div>
+      ) : null}
+
+      {dropDown === QUESTIONS.ANSWERED ? (
+        <div className="container content-center">
+          <QuestionList name={"Done"} questionsIds={answeredQuestionsIds} />
+        </div>
+      ) : null}
+
+      {dropDown === QUESTIONS.ALL ? (
+        <div className="container content-center">
+          <div className="row dashboard-padding">
+            <div className="col">
+              <QuestionList
+                name={"New Questions"}
+                questionsIds={unansweredQuestionsIds}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col">
+              <QuestionList name={"Done"} questionsIds={answeredQuestionsIds} />
+            </div>
           </div>
         </div>
-        <div className="row">
-          <div className="col">
-            <QuestionList name={"Done"} questionsIds={answeredQuestionsIds} />
-          </div>
-        </div>
-      </div>
+      ) : null}
     </div>
   );
 };

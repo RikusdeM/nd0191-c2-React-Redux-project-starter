@@ -50,6 +50,10 @@
   height: 100vh;
 }
 
+.dashboard-padding {
+  margin-bottom: 20px;
+}
+
 .content-center {
   text-align: center;
 }

@@ -20,7 +20,7 @@ const Question = ({ authedUser, question }) => {
         <h6 className="card-subtitle mb-2 text-muted">
           {formatDate(timestamp)}
         </h6>
-        <p className="card-text">{id}</p>
+        {/* <p className="card-text">{id}</p> */}
         <button
           type="button"
           className="btn btn-sm btn-block btn-primary"
