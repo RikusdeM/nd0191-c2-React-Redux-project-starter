@@ -7,15 +7,13 @@ const Question = ({ authedUser, question }) => {
   const { id, author, timestamp } = question;
 
   const toPoll = (e, id) => {
-    e.preventDefault();    
+    e.preventDefault();
     navigate(`/questions/${id}`);
   };
 
-  if (question === null) {
-    return <p>This Question doesn't exist</p>;
-  }
-
-  return (
+  return question === null ? (
+    <p>This Question doesn't exist</p>
+  ) : (
     <div className="card" style={{ width: "15rem" }}>
       <div className="card-body">
         <h5 className="card-title">{author}</h5>
@@ -30,12 +28,6 @@ const Question = ({ authedUser, question }) => {
         >
           Show
         </button>
-        {/* <a href="#" className="card-link">
-          Card link
-        </a>
-        <a href="#" className="card-link">
-          Another link
-        </a> */}
       </div>
     </div>
   );
