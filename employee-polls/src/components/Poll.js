@@ -65,14 +65,14 @@ const Poll = ({ authedUser, users, question, alreadyAnswered, dispatch }) => {
                   <div>
                     <h6>
                       {pollSummary.optOneVotes} Votes{" "}
-                      <Badge bg="secondary">
+                      <Badge bg="secondary" data-testid="option-one-badge-a">
                         {(pollSummary.optOneVotes / pollSummary.totalUsers) *
                           100}
                         %
                       </Badge>
                     </h6>
                     <h6>
-                      <Badge bg="info">
+                      <Badge bg="info" data-testid="option-one-badge-b">
                         {myAnswer === ANSWERS.OPTION_ONE ? (
                           <p>My Answer</p>
                         ) : (
@@ -86,6 +86,7 @@ const Poll = ({ authedUser, users, question, alreadyAnswered, dispatch }) => {
                     type="button"
                     className="btn btn-sm btn-block btn-outline-success"
                     onClick={(e) => updatePoll(e, ANSWERS.OPTION_ONE)}
+                    data-testid="vote-option-one"
                   >
                     Click
                   </button>
@@ -101,14 +102,14 @@ const Poll = ({ authedUser, users, question, alreadyAnswered, dispatch }) => {
                   <div>
                     <h6>
                       {pollSummary.optTwoVotes} Votes{" "}
-                      <Badge bg="secondary">
+                      <Badge bg="secondary" data-testid="option-two-badge-a">
                         {(pollSummary.optTwoVotes / pollSummary.totalUsers) *
                           100}
                         %
                       </Badge>
                     </h6>
                     <h6>
-                      <Badge bg="info">
+                      <Badge bg="info" data-testid="option-two-badge-b">
                         {myAnswer === ANSWERS.OPTION_TWO ? (
                           <p>My Answer</p>
                         ) : (
@@ -122,6 +123,7 @@ const Poll = ({ authedUser, users, question, alreadyAnswered, dispatch }) => {
                     type="button"
                     className="btn btn-sm btn-block btn-outline-success"
                     onClick={(e) => updatePoll(e, ANSWERS.OPTION_TWO)}
+                    data-testid="vote-option-two"
                   >
                     Click
                   </button>
@@ -136,10 +138,20 @@ const Poll = ({ authedUser, users, question, alreadyAnswered, dispatch }) => {
 };
 
 const mapStateToProps = ({ authedUser, users, questions }, props) => {
-  const { question_id } = props.router.params;
-  const question = questions[question_id];
-  const user = users[question.author];
+  const getQuestionIdFromRouter = (props) => {
+    const routerParams = props.router.params;
+    if (Object.keys(routerParams).length > 0) {
+      return routerParams.question_id;
+    } else {
+      const url = props.router.location.pathname;
+      const parts = url.split("/");
+      const questionId = parts[parts.length - 1];
+      return questionId;
+    }
+  };
 
+  const question_id = getQuestionIdFromRouter(props);
+  const question = questions[question_id];
   const alreadyAnswered = Object.keys(users[authedUser].answers).includes(
     question_id
   );
