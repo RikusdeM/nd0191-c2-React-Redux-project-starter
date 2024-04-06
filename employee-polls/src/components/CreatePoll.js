@@ -74,6 +74,7 @@ const CreatePoll = ({ authedUser, dispatch }) => {
                 disabled={textOne === "" || textTwo === ""}
                 className="btn btn-sm btn-block btn-outline-primary"
                 onClick={(e) => handleSubmit(e)}
+                data-testid="submit-btn"
               >
                 Submit
               </button>

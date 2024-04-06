@@ -1,8 +1,7 @@
 import React from "react";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router";
-import { render, screen, fireEvent } from "@testing-library/react";
-import { getByAltText, getByClassName } from "@testing-library/dom";
+import { render, fireEvent } from "@testing-library/react";
 import Poll from "./Poll";
 import { store } from "../app/store";
 import { handleInitialData } from "../actions/shared";
@@ -12,7 +11,7 @@ test("renders a poll", async () => {
   const questionID = "vthrdm985a262al8qx3do";
   const authedUser = "sarahedo";
 
-  /*Note: No need to setup mock store with exact scnenario, as we can dispatch the initial data
+  /*Note: No need to setup mock store with exact scnenario, as we can dispatch the initial data.
     The store.test.js test ensures us the store behaving correctly when these actions are dispatched
     */
   await store.dispatch(handleInitialData());
