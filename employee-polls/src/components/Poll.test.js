@@ -7,66 +7,16 @@ import Poll from "./Poll";
 import { store } from "../app/store";
 import { handleInitialData } from "../actions/shared";
 import { setAuthedUser } from "../actions/authedUser";
-import configureStore from "redux-mock-store";
-
-// const mockStore = configureStore([]);
 
 test("renders a poll", async () => {
   const questionID = "vthrdm985a262al8qx3do";
-  let authedUser = "sarahedo";
+  const authedUser = "sarahedo";
 
-  //Rather dispatch the intial store data, 
-  //as setting up the Mock store with the exact data to replicate this scenario is quite complex
-
+  /*Note: No need to setup mock store with exact scnenario, as we can dispatch the initial data
+    The store.test.js test ensures us the store behaving correctly when these actions are dispatched
+    */
   await store.dispatch(handleInitialData());
   await store.dispatch(setAuthedUser(authedUser));
-
-  //   Mocking initial store state
-  //   const initialState = {
-  //     authedUser: authedUser,
-  //     users: {
-  //       [authedUser]: {
-  //         id: authedUser,
-  //         password: "password123",
-  //         name: "Sarah Edo",
-  //         avatarURL: "avatar_marilyn_monroe.png",
-  //         answers: {
-  //           "8xf0y6ziyjabvozdd253nd": "optionOne",
-  //           "6ni6ok3ym7mf1p33lnez": "optionOne",
-  //           am8ehyc8byjqgar0jgpub9: "optionTwo",
-  //           loxhs1bqm25b708cmbf3g: "optionTwo",
-  //         },
-  //         questions: ["8xf0y6ziyjabvozdd253nd", "am8ehyc8byjqgar0jgpub9"],
-  //       },
-  //       tylermcginnis: {
-  //         id: 'tylermcginnis',
-  //         password:'abc321',
-  //         name: 'Tyler McGinnis',
-  //         avatarURL: "avatar_bad_breaking_chemisrty_heisenberg.png",
-  //         answers: {
-  //           "vthrdm985a262al8qx3do": 'optionOne',
-  //           "xj352vofupe1dqz9emx13r": 'optionTwo',
-  //         },
-  //         questions: ['loxhs1bqm25b708cmbf3g', 'vthrdm985a262al8qx3do'],
-  //       },
-  //     },
-  //     questions: {
-  //       [questionID]: {
-  //         id: questionID,
-  //         author: "tylermcginnis",
-  //         timestamp: 1489579767190,
-  //         optionOne: {
-  //           votes: ["tylermcginnis"],
-  //           text: "take a course on ReactJS",
-  //         },
-  //         optionTwo: {
-  //           votes: ["mtsamis"],
-  //           text: "take a course on unit testing with Jest",
-  //         },
-  //       },
-  //     },
-  //   };
-  //   const store = mockStore(initialState);
 
   const poll = render(
     <MemoryRouter initialEntries={[`/questions/${questionID}`]}>
@@ -76,7 +26,7 @@ test("renders a poll", async () => {
     </MemoryRouter>
   );
 
-  const { users, questions } = store.getState();
+  const { users } = store.getState();
 
   const questionAlreadyAnswered = Object.keys(
     users[authedUser].answers
