@@ -32,9 +32,6 @@ export function handleAddQuestion(questionsText) {
   return (dispatch, getState) => {
     const { authedUser } = getState();
 
-    // dispatch(showLoading());
-    //Todo: Re-add loading
-
     const updateBackend = async () => {
       try {
         const question = await saveQuestion({
@@ -83,8 +80,7 @@ export function unanswerQuestion({ authedUser, id, answer }) {
 }
 
 export function handleAnswerQuestion({ authedUser, id, answer }) {
-  return (dispatch) => {
-    // const { authedUser } = getState();
+  return (dispatch) => {    
     dispatch(answerQuestion({ authedUser, id, answer }));
     dispatch(updateUserAddAnswer({ authedUser, id, answer }));
 

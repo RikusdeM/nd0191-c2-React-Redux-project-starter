@@ -1,8 +1,9 @@
 import "bootstrap/dist/css/bootstrap.css";
-import Badge from "react-bootstrap/Badge";
+
 import { connect } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { handleAnswerQuestion } from "../actions/questions";
+import PollCard, { ANSWERS } from "./PollCard";
 
 const withRouter = (Component) => {
   const ComponentWithRouterProp = (props) => {
@@ -18,11 +19,6 @@ const withRouter = (Component) => {
 const Poll = ({ authedUser, users, question, alreadyAnswered, dispatch }) => {
   const { id, author, optionOne, optionTwo } = question;
   const { avatarURL } = users[question.author];
-
-  const ANSWERS = {
-    OPTION_ONE: "optionOne",
-    OPTION_TWO: "optionTwo",
-  };
 
   const updatePoll = (e, answer) => {
     e.preventDefault();
@@ -57,80 +53,26 @@ const Poll = ({ authedUser, users, question, alreadyAnswered, dispatch }) => {
       <h3>Would you Rather</h3>
       <div className="container">
         <div className="row">
-          <div className="col">
-            <div className="card">
-              <div className="card-body">
-                <h5 className="card-title">{optionOne.text}</h5>
-                {alreadyAnswered ? (
-                  <div>
-                    <h6>
-                      {pollSummary.optOneVotes} Votes{" "}
-                      <Badge bg="secondary" data-testid="option-one-badge-a">
-                        {(pollSummary.optOneVotes / pollSummary.totalUsers) *
-                          100}
-                        %
-                      </Badge>
-                    </h6>
-                    <h6>
-                      <Badge bg="info" data-testid="option-one-badge-b">
-                        {myAnswer === ANSWERS.OPTION_ONE ? (
-                          <p>My Answer</p>
-                        ) : (
-                          ""
-                        )}
-                      </Badge>
-                    </h6>
-                  </div>
-                ) : (
-                  <button
-                    type="button"
-                    className="btn btn-sm btn-block btn-outline-success"
-                    onClick={(e) => updatePoll(e, ANSWERS.OPTION_ONE)}
-                    data-testid="vote-option-one"
-                  >
-                    Click
-                  </button>
-                )}
-              </div>
-            </div>
-          </div>
-          <div className="col">
-            <div className="card">
-              <div className="card-body">
-                <h5 className="card-title">{optionTwo.text}</h5>
-                {alreadyAnswered ? (
-                  <div>
-                    <h6>
-                      {pollSummary.optTwoVotes} Votes{" "}
-                      <Badge bg="secondary" data-testid="option-two-badge-a">
-                        {(pollSummary.optTwoVotes / pollSummary.totalUsers) *
-                          100}
-                        %
-                      </Badge>
-                    </h6>
-                    <h6>
-                      <Badge bg="info" data-testid="option-two-badge-b">
-                        {myAnswer === ANSWERS.OPTION_TWO ? (
-                          <p>My Answer</p>
-                        ) : (
-                          ""
-                        )}
-                      </Badge>
-                    </h6>
-                  </div>
-                ) : (
-                  <button
-                    type="button"
-                    className="btn btn-sm btn-block btn-outline-success"
-                    onClick={(e) => updatePoll(e, ANSWERS.OPTION_TWO)}
-                    data-testid="vote-option-two"
-                  >
-                    Click
-                  </button>
-                )}
-              </div>
-            </div>
-          </div>
+          <PollCard
+            optionText={optionOne.text}
+            alreadyAnswered={alreadyAnswered}
+            optVotes={pollSummary.optOneVotes}
+            totalUsers={pollSummary.totalUsers}
+            myAnswer={myAnswer}
+            pollAnswer={ANSWERS.OPTION_ONE}
+            updatePoll={updatePoll}
+            dataTestid={"option-one"}
+          />
+          <PollCard
+            optionText={optionTwo.text}
+            alreadyAnswered={alreadyAnswered}
+            optVotes={pollSummary.optTwoVotes}
+            totalUsers={pollSummary.totalUsers}
+            myAnswer={myAnswer}
+            pollAnswer={ANSWERS.OPTION_TWO}
+            updatePoll={updatePoll}
+            dataTestid={"option-two"}
+          />
         </div>
       </div>
     </div>
