@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const Question = ({ authedUser, question }) => {
   const navigate = useNavigate();
-  const { id, author, timestamp } = question;
+  const { author, timestamp } = question;
 
   const toPoll = (e, id) => {
     e.preventDefault();

@@ -42,7 +42,7 @@ export function handleAddQuestion(questionsText) {
           optionTwoText: questionsText.optionTwoText,
           author: authedUser,
         });
-        const updateUserQ = await saveQuestionUserUpdate({
+        await saveQuestionUserUpdate({
           authedUser: authedUser,
           qid: question.id,
         });

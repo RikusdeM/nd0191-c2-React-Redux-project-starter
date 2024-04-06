@@ -9,7 +9,6 @@ import Leaderboard from "./Leaderbord";
 import Nav from "./Nav";
 import NoMatch from "./NoMatch";
 import {
-  BrowserRouter as Router,
   Route,
   Routes,
   Navigate,
@@ -19,7 +18,7 @@ import Login from "./Login";
 const App = (props) => {
   useEffect(() => {
     props.dispatch(handleInitialData());
-  }, []);
+  });
 
   return (
     <Fragment>

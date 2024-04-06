@@ -28,6 +28,7 @@ const Leaderboard = ({ rankedUsers }) => {
                       <img
                         src={`../${user.avatarURL}`}
                         style={{ width: 64, height: 64 }}
+                        alt="avatar"
                       />
                     </div>
                     <div className="col-sm-2">
