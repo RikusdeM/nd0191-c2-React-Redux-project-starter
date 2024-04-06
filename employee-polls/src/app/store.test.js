@@ -1,15 +1,16 @@
-import { expect, describe, it } from "@jest/globals";
+import { expect, describe, it, beforeAll } from "@jest/globals";
 import { handleInitialData } from "../actions/shared";
 import { setAuthedUser } from "../actions/authedUser";
 import { store } from "./store";
 
+const authedUser = "sarahedo";
+beforeAll(async () => {
+  await store.dispatch(handleInitialData());
+  await store.dispatch(setAuthedUser(authedUser));
+});
+
 describe("testStore", () => {
   it("should test the state of the Redux store against the mockStore data after it was dispatched", async () => {
-    const authedUser = "sarahedo";
-
-    await store.dispatch(handleInitialData());
-    await store.dispatch(setAuthedUser(authedUser));
-
     const storeState = store.getState();
 
     const mockStoreData = {

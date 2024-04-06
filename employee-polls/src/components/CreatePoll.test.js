@@ -6,16 +6,17 @@ import { handleInitialData } from "../actions/shared";
 import { setAuthedUser } from "../actions/authedUser";
 import CreatePoll from "./CreatePoll";
 import { MemoryRouter } from "react-router";
-import { expect, describe, it } from "@jest/globals";
+import { expect, describe, it, beforeAll } from "@jest/globals";
+
+const authedUser = "sarahedo";
+beforeAll(async () => {
+  //Setup the store with the initial data
+  await store.dispatch(handleInitialData());
+  await store.dispatch(setAuthedUser(authedUser));
+});
 
 describe("CreatePoll", () => {
-  it("creates and submits a poll", async () => {
-    const authedUser = "sarahedo";
-
-    //Setup the store with the initial data
-    await store.dispatch(handleInitialData());
-    await store.dispatch(setAuthedUser(authedUser));
-
+  it("creates a Poll and checks the state of the UI and Redux store ", async () => {
     const originalStoreState = store.getState();
     const originalAuthedUserQuestions =
       originalStoreState.users[authedUser].questions;

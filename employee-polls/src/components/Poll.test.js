@@ -7,49 +7,53 @@ import { store } from "../app/store";
 import { handleInitialData } from "../actions/shared";
 import { setAuthedUser } from "../actions/authedUser";
 
-test("renders a poll", async () => {
-  const questionID = "vthrdm985a262al8qx3do";
-  const authedUser = "sarahedo";
-
+const authedUser = "sarahedo";
+beforeAll(async () => {
   /*Note: No need to setup mock store with exact scnenario, as we can dispatch the initial data.
     The store.test.js test ensures us the store behaving correctly when these actions are dispatched
     */
   await store.dispatch(handleInitialData());
   await store.dispatch(setAuthedUser(authedUser));
+});
 
-  const poll = render(
-    <MemoryRouter initialEntries={[`/questions/${questionID}`]}>
-      <Provider store={store}>
-        <Poll />
-      </Provider>
-    </MemoryRouter>
-  );
+describe("Poll", () => {
+  it("will render a poll and check if the UI changes after voting", () => {
+    const questionID = "vthrdm985a262al8qx3do";
 
-  const { users } = store.getState();
+    const poll = render(
+      <MemoryRouter initialEntries={[`/questions/${questionID}`]}>
+        <Provider store={store}>
+          <Poll />
+        </Provider>
+      </MemoryRouter>
+    );
 
-  const questionAlreadyAnswered = Object.keys(
-    users[authedUser].answers
-  ).includes(questionID);
+    const { users } = store.getState();
 
-  expect(questionAlreadyAnswered).toEqual(false);
+    const questionAlreadyAnswered = Object.keys(
+      users[authedUser].answers
+    ).includes(questionID);
 
-  expect(poll.getByText(/Poll by/i)).toBeInTheDocument();
-  expect(poll.getByText(/Would you Rather/i)).toBeInTheDocument();
-  expect(
-    poll.container.getElementsByClassName("avatar")[0]
-  ).toBeInTheDocument();
+    expect(questionAlreadyAnswered).toEqual(false);
 
-  //Test components on unanswered Poll
-  expect(poll.getByTestId("vote-option-one")).toBeInTheDocument();
-  expect(poll.getByTestId("vote-option-two")).toBeInTheDocument();
+    expect(poll.getByText(/Poll by/i)).toBeInTheDocument();
+    expect(poll.getByText(/Would you Rather/i)).toBeInTheDocument();
+    expect(
+      poll.container.getElementsByClassName("avatar")[0]
+    ).toBeInTheDocument();
 
-  const optOneVoteBtn = poll.getByTestId("vote-option-one");
-  fireEvent.click(optOneVoteBtn);
+    //Test components on unanswered Poll
+    expect(poll.getByTestId("vote-option-one")).toBeInTheDocument();
+    expect(poll.getByTestId("vote-option-two")).toBeInTheDocument();
 
-  //Test components on answered Poll
-  expect(poll.getByTestId("option-one-badge-a")).toBeInTheDocument();
-  expect(poll.getByTestId("option-one-badge-b")).toBeInTheDocument();
-  expect(poll.getByTestId("option-two-badge-a")).toBeInTheDocument();
-  expect(poll.getByTestId("option-one-badge-b")).toBeInTheDocument();
-  expect(poll.getByText(/My Answer/i)).toBeInTheDocument();
+    const optOneVoteBtn = poll.getByTestId("vote-option-one");
+    fireEvent.click(optOneVoteBtn);
+
+    //Test components on answered Poll
+    expect(poll.getByTestId("option-one-badge-a")).toBeInTheDocument();
+    expect(poll.getByTestId("option-one-badge-b")).toBeInTheDocument();
+    expect(poll.getByTestId("option-two-badge-a")).toBeInTheDocument();
+    expect(poll.getByTestId("option-one-badge-b")).toBeInTheDocument();
+    expect(poll.getByText(/My Answer/i)).toBeInTheDocument();
+  });
 });

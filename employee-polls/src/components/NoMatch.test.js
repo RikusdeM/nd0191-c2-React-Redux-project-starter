@@ -1,10 +1,10 @@
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import NoMatch from "./NoMatch";
-import { expect, test, describe, it } from "@jest/globals";
+import { expect, describe, it } from "@jest/globals";
 
 describe("NoMatch", () => {
   it("will match the snapshot", () => {
-    const component = render(<NoMatch />);
-    expect(component).toMatchSnapshot();
+    const noMatch = render(<NoMatch />);
+    expect(noMatch).toMatchSnapshot();
   });
 });

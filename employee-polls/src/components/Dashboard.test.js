@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import Dashboard from "./Dashboard";
-import { expect, describe, it } from "@jest/globals";
+import { expect, describe, it, beforeAll } from "@jest/globals";
 import React from "react";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router";
@@ -8,17 +8,19 @@ import { store } from "../app/store";
 import { handleInitialData } from "../actions/shared";
 import { setAuthedUser } from "../actions/authedUser";
 
-describe("Dashboard", () => {
-  it("will match the snapshot", async () => {
-    /* Configure the store with the same static initial Data and authed user. 
+beforeAll(async () => {
+  /* Configure the store with the same static initial Data and authed user. 
     The component should render the same when the initial data with 
     the same authedUser is used.
     */
-    const authedUser = "sarahedo";
+  const authedUser = "sarahedo";
+  await store.dispatch(handleInitialData());
+  await store.dispatch(setAuthedUser(authedUser));
+  return;
+});
 
-    await store.dispatch(handleInitialData());
-    await store.dispatch(setAuthedUser(authedUser));
-
+describe("Dashboard", () => {
+  it("will match the snapshot", async () => {
     const dashboard = render(
       <MemoryRouter initialEntries={[`/`]}>
         <Provider store={store}>
