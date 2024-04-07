@@ -1,13 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import { setAuthedUser } from "../actions/authedUser";
 
 const Nav = ({ authedUser, users, dispatch }) => {
   //todo: add active state to navbar, i.e. which tab is currently active
+  const navigate = useNavigate();
 
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(setAuthedUser(null));
+    navigate("/login");
     // setLinkClicked(true)
   }
   
