@@ -2,8 +2,9 @@ import { connect } from "react-redux";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { setAuthedUser } from "../actions/authedUser";
+import { withRouter } from "../utils/helpers";
 
-const Login = ({ users, dispatch }) => {
+const Login = ({ users, dispatch, questionExists, props }) => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
@@ -24,25 +25,36 @@ const Login = ({ users, dispatch }) => {
     e.preventDefault();
 
     const user = users[userName];
-    
+
     if (user !== undefined) {
-      if (user.password === password) {                
+      if (user.password === password) {
         dispatch(setAuthedUser(user.id));
 
         setUserName("");
         setPassword("");
 
-        navigate(`/`);
+        const pathName = props.router.location.pathname;
+        if (pathName !== undefined && pathName !== "/login") {
+          if (questionExists === true) {
+            console.log("navigate to " + props.router.location.pathname);
+            navigate(props.router.location.pathname);
+          } else {
+            //should user also be logged out
+            // dispatch(setAuthedUser(user.id));
+            // TODO
+            navigate(`/nomatch`);
+          }
+        } else {
+          navigate(`/`);
+        }
       } else {
-        alert(
-          "Incorrect password, please try again"
-        );
+        alert("Incorrect password, please try again");
       }
     } else {
       alert("This user does not exist");
     }
   };
-  
+
   return (
     <div className="content-center">
       <h1>Employee Polls</h1>
@@ -82,10 +94,26 @@ const Login = ({ users, dispatch }) => {
   );
 };
 
-const mapStateToProps = ({ questions, authedUser, users }) => {
+const mapStateToProps = ({ questions, authedUser, users }, props) => {
+  const qid = props.router.params.question_id;
+
+  const questionExists = (qid) => {
+    if (qid !== undefined) {
+      if (questions[qid] !== undefined) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  };
+
   return {
     users,
+    questionExists: questionExists(qid),
+    props,
   };
 };
 
-export default connect(mapStateToProps)(Login);
+export default withRouter(connect(mapStateToProps)(Login));

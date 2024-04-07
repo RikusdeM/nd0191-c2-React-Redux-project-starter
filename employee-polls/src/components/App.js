@@ -1,5 +1,5 @@
 import "../App.css";
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { handleInitialData } from "../actions/shared";
 import Dashboard from "./Dashboard";
@@ -8,17 +8,26 @@ import CreatePoll from "./CreatePoll";
 import Leaderboard from "./Leaderbord";
 import Nav from "./Nav";
 import NoMatch from "./NoMatch";
-import {
-  Route,
-  Routes,
-  Navigate,
-} from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import Login from "./Login";
 
 const App = (props) => {
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    props.dispatch(handleInitialData());
+    props
+      .dispatch(handleInitialData())
+      .then(() => {
+        setLoading(false);
+        console.log("finished loading");
+      })
+      .catch((error) => {
+        console.error("Could not load the initial Data " + error);
+        setLoading(false);
+      });
   });
+
+  console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 
   return (
     <Fragment>
@@ -26,8 +35,7 @@ const App = (props) => {
         {props.loggedIn === false ? null : <Nav />}
 
         <Routes>
-          <Route path="/login" exact element={<Login />} />
-
+          <Route path="/login" exact element={loading ? null : <Login />} />
           <Route
             exact
             path="/"
@@ -39,15 +47,11 @@ const App = (props) => {
               )
             }
           />
-
           <Route
             exact
             path="/questions/:question_id"
-            element={
-              props.loggedIn ? <Poll /> : <Navigate replace to={"/login"} />
-            }
+            element={props.loggedIn ? <Poll /> : loading ? null : <Login />}
           />
-
           <Route
             exact
             path="/leaderboard"
@@ -59,7 +63,6 @@ const App = (props) => {
               )
             }
           />
-
           <Route
             exact
             path="/add"
