@@ -18,8 +18,7 @@ const App = (props) => {
     props
       .dispatch(handleInitialData())
       .then(() => {
-        setLoading(false);
-        console.log("finished loading");
+        setLoading(false);        
       })
       .catch((error) => {
         console.error("Could not load the initial Data " + error);
@@ -27,7 +26,6 @@ const App = (props) => {
       });
   });
 
-  console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 
   return (
     <Fragment>
