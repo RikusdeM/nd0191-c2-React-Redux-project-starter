@@ -1,11 +1,9 @@
 import { expect, describe, it } from "@jest/globals";
-import {
-  saveQuestion,
-  saveQuestionAnswer,
-  saveQuestionUserUpdate,
-} from "./api";
+import { saveQuestionUserUpdate } from "./api";
+import { _saveQuestion } from "./_DATA";
+import { _saveQuestionAnswer } from "./_DATA";
 
-describe("saveQuestion", () => {
+describe("_saveQuestion", () => {
   it("should return the formatted saved Question if it is passed the needed arguments", async () => {
     const author = "mtsamis";
     const question = {
@@ -26,7 +24,7 @@ describe("saveQuestion", () => {
         text: question.optionTwoText,
       },
     };
-    const result = await saveQuestion(question);
+    const result = await _saveQuestion(question);
 
     expect(result).toEqual(desiredSavedQuestion);
   });
@@ -38,22 +36,22 @@ describe("saveQuestion", () => {
     const failureMsg =
       "Please provide optionOneText, optionTwoText, and author";
 
-    await expect(saveQuestion(author)).rejects.toEqual(failureMsg);
-    await expect(saveQuestion(author, optionOne)).rejects.toEqual(failureMsg);
-    await expect(saveQuestion(optionTwo, author)).rejects.toEqual(failureMsg);
-    await expect(saveQuestion(optionOne, optionTwo)).rejects.toEqual(
+    await expect(_saveQuestion(author)).rejects.toEqual(failureMsg);
+    await expect(_saveQuestion(author, optionOne)).rejects.toEqual(failureMsg);
+    await expect(_saveQuestion(optionTwo, author)).rejects.toEqual(failureMsg);
+    await expect(_saveQuestion(optionOne, optionTwo)).rejects.toEqual(
       failureMsg
     );
   });
 });
 
-describe("saveQuestionAnswer", () => {
+describe("_saveQuestionAnswer", () => {
   it("should return true, when the correct argements are passed", async () => {
     const authedUser = "tylermcginnis";
     const qid = "am8ehyc8byjqgar0jgpub9";
     const answer = "optionOne";
 
-    const result = await saveQuestionAnswer({ authedUser, qid, answer });
+    const result = await _saveQuestionAnswer({ authedUser, qid, answer });
 
     expect(result).toEqual(true);
   });
@@ -63,10 +61,10 @@ describe("saveQuestionAnswer", () => {
     const qid = "am8ehyc8byjqgar0jgpub9";
     const failureMsg = "Please provide authedUser, qid, and answer";
 
-    await expect(saveQuestionAnswer({ authedUser })).rejects.toEqual(
+    await expect(_saveQuestionAnswer({ authedUser })).rejects.toEqual(
       failureMsg
     );
-    await expect(saveQuestionAnswer({ authedUser, qid })).rejects.toEqual(
+    await expect(_saveQuestionAnswer({ authedUser, qid })).rejects.toEqual(
       failureMsg
     );
   });

@@ -1,6 +1,17 @@
-# Getting Started with Create React App
+# Employee Polls App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## A basic Polls app that could be used beween colleagues to vote on polls check the total number of responses of the people who chose a specific answer and view a current leaderboard of people who answered and created the most questions.
+
+Clone the project at github
+### `git clone git@github.com:RikusdeM/nd0191-c2-React-Redux-project-starter.git`
+
+Change directory into the project Folder:
+
+### `$cd <your working directory> /nd0191-c2-React-Redux-project-starter/employee-polls`
+
+Install the dependencies with:
+
+### `npm install`
 
 ## Available Scripts
 
